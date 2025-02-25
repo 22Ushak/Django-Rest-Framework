@@ -24,6 +24,7 @@ class Migration(migrations.Migration):
                 ("emp_id", models.CharField(max_length=10)),
                 ("emp_name", models.CharField(max_length=50)),
                 ("designation", models.CharField(max_length=50)),
+                
             ],
         ),
     ]
