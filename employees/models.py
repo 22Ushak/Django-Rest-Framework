@@ -4,11 +4,11 @@ from datetime import datetime
 
 # Create your models here.
 class Employees(models.Model):
-    emp_id=models.CharField(max_length=10,blank=False, null=False)
+    emp_id=models.CharField(max_length=10,blank=False, null=False,unique=True)
     emp_name=models.CharField(max_length=50,blank=False, null=False)
     designation=models.CharField(max_length=50,blank=False, null=False)
 
-    hire_date=models.DateField(default=datetime.now)
+    hire_date=models.DateTimeField(default=datetime.now)
 
     def clean(self):
         # Custom validation to ensure emp_id is not longer than 10 characters

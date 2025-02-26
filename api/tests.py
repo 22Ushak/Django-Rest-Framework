@@ -55,3 +55,33 @@ class EmployeeAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         response = self.client.get(self.list_url)#checking if employee is deleted
         print(response.data)  # Debugging
+
+    #extra testing
+    def test_post_employee_missing_name(self):
+    # Missing 'emp_name'
+        new_employee_data = {
+            'emp_id': 'EMP003',
+            'designation': 'Engineer',
+            'hire_date': '2025-02-20',
+        }
+        response = self.client.post(self.list_url, new_employee_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('emp_name', response.data)  # Check if error on 'emp_name'
+
+    def test_post_employee_duplicate_emp_id(self):
+        self.client.post(self.list_url, self.employee_data, format='json')
+
+        new_employee_data = {
+            'emp_id': 'EMP001',  # Duplicate emp_id
+            'emp_name': 'Duplicate John',
+            'designation': 'Manager',
+            'hire_date': '2025-02-20',
+        }
+        response = self.client.post(self.list_url, new_employee_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('emp_id', response.data)  # Error related to duplicate emp_id
+
+    
+
+
+    
